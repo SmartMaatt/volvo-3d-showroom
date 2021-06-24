@@ -21,7 +21,7 @@ public class CameraClosedController : MonoBehaviour
 
 
     /*PRIVATE METHODS*/
-    void Start()
+    void Awake()
     {
         _closedLookComponent = CameraObj.GetComponent<CameraClosedLook>();
         activeSeat = seatArray.Length;

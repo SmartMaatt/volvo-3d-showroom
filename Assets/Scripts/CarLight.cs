@@ -94,7 +94,6 @@ public class CarLight : MonoBehaviour
 
         SetLightComponents();
         SetMaterialsForLight();
-
     }
 
 }

@@ -79,4 +79,9 @@ public class CameraFreeLook : MonoBehaviour
         maxDistance += mouseScroll * scrollIntesivity;
         maxDistance = Mathf.Clamp(maxDistance, minScroll, maxScroll);
     }
+
+    public void SetDistance(float distance)
+    {
+        maxDistance = Mathf.Clamp(distance, minScroll, maxScroll);
+    }
 }

@@ -69,7 +69,8 @@ public class CameraClosedLook : MonoBehaviour
 
     public void ResetFieldOfView()
     {
-        _cameraComponent.fieldOfView = maxScroll;
+        if(_cameraComponent)
+            _cameraComponent.fieldOfView = maxScroll;
     }
 
     public void Scrolling(float mouseScroll)
@@ -79,5 +80,10 @@ public class CameraClosedLook : MonoBehaviour
             _cameraComponent.fieldOfView += mouseScroll * scrollIntesivity;
             _cameraComponent.fieldOfView = Mathf.Clamp(_cameraComponent.fieldOfView, minScroll, maxScroll);
         }
+    }
+
+    public void SetDistance(float distance)
+    {
+        _cameraComponent.fieldOfView = Mathf.Clamp(distance, minScroll, maxScroll);
     }
 }

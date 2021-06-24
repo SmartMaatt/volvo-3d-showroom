@@ -43,7 +43,7 @@ public class CameraFreeController : MonoBehaviour
 
 
     /*PRIVATE METHODS*/
-    void Start()
+    void Awake()
     {
         transform.eulerAngles = new Vector3(Xrotation, Yrotation, 0.0f);
         Vector3 rot = transform.localRotation.eulerAngles;
@@ -129,5 +129,7 @@ public class CameraFreeController : MonoBehaviour
 
         Quaternion localRotation = Quaternion.Euler(_rotX, _rotY, 0.0f);
         transform.rotation = localRotation;
+
+        _freeLookComponent.SetDistance(_freeLookComponent.maxScroll);
     }
 }

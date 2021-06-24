@@ -2,37 +2,45 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InputManager : MonoBehaviour
+public class InputManager : MonoBehaviour, IGameManager
 {
     /*PARAMS*/
+    public ManagerStatus status { get; private set; }
+
     [Header("References")]
     [SerializeField] private CameraFreeController cameraFreeController;
     [SerializeField] private CameraClosedController cameraClosedController;
+    [SerializeField] private ButtonToggle seatButton;
+
     [Space]
     public bool moveLock = false;
     public bool lmbPressed = false;
     public bool freeCamera = true;
     public bool resetSettings = false;
     public bool idleAnimation = false;
+
     [Space]
     public float idleTime = 0.0f;
     public float maxIdleTime = 60.0f;
 
+    private int cameraState;
 
     /*PRIVATE METHODS*/
-    void Start()
+    public void Startup()
     {
+        Debug.Log("Starting Input manager");
+
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+        cameraState = 0;
+
+        status = ManagerStatus.Started;
     }
 
     void Update()
     {
         EscapeTrigger();
         LeftMouseButtonTrigger();
-
-        FreeCloseTrigger();
-        ChangeSeatTrigger();
 
         IdleAnimationTrigger();
     }
@@ -67,32 +75,6 @@ public class InputManager : MonoBehaviour
         else if (Input.GetMouseButtonUp(0))
         {
             lmbPressed = false;
-            InputOccured();
-        }
-    }
-
-    void FreeCloseTrigger()
-    {
-        if (Input.GetKeyDown(KeyCode.T))
-        {
-            cameraClosedController.transform.gameObject.SetActive(freeCamera);
-            cameraFreeController.transform.gameObject.SetActive(!freeCamera);
-            freeCamera = !freeCamera;
-
-            InputOccured();
-            if (resetSettings)
-            {
-                cameraClosedController.ResetSettings();
-                cameraFreeController.ResetSettings();
-            }
-        }
-    } 
-
-    void ChangeSeatTrigger()
-    {
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            cameraClosedController.ChangeSeat();
             InputOccured();
         }
     }
@@ -153,19 +135,55 @@ public class InputManager : MonoBehaviour
 
     void IdleAnimation()
     {
-        if (idleAnimation && !freeCamera)
+        if (!lmbPressed)
         {
-            cameraClosedController.transform.gameObject.SetActive(freeCamera);
-            cameraFreeController.transform.gameObject.SetActive(!freeCamera);
-            freeCamera = !freeCamera;
-        }
+            if (idleAnimation && !freeCamera)
+            {
+                cameraClosedController.transform.gameObject.SetActive(freeCamera);
+                cameraFreeController.transform.gameObject.SetActive(!freeCamera);
+                freeCamera = !freeCamera;
 
-        cameraFreeController.idleAnimation = idleAnimation;
+                cameraState = 0;
+                seatButton.ToggleButtonHighlight();
+            }
+
+            cameraFreeController.idleAnimation = idleAnimation;
+        }
     }
 
     void InputOccured()
     {
         idleTime = 0.0f;
         idleAnimation = false;
+    }
+
+
+    /*PUBLIC METHODS*/
+    public void ChangePerspective()
+    {
+        if (cameraState == 0 || cameraState == 5)
+        {
+            cameraClosedController.transform.gameObject.SetActive(freeCamera);
+            cameraFreeController.transform.gameObject.SetActive(!freeCamera);
+            freeCamera = !freeCamera;
+            seatButton.ToggleButtonHighlight();
+
+            InputOccured();
+            if (resetSettings)
+            {
+                cameraClosedController.ResetSettings();
+                cameraFreeController.ResetSettings();
+            }
+
+            if (cameraState == 5)
+                cameraState = -1;
+        }
+        else
+        {
+            cameraClosedController.ChangeSeat();
+            InputOccured();
+        }
+
+        cameraState++;
     }
 }
