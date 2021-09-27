@@ -4,8 +4,11 @@ using UnityEngine;
 
 public class ConfigurationMenuToggle : MonoBehaviour
 {
+    /*Params*/
     [SerializeField] GameObject[] panels;
 
+
+    /*Public methods*/
     public void SelectPanel(GameObject target)
     {
         bool panelInBase = false;
@@ -19,28 +22,37 @@ public class ConfigurationMenuToggle : MonoBehaviour
         {
             foreach (GameObject panel in panels)
             {
-                panel.SetActive(false);
+                if (panel.GetComponent<UIElement>())
+                    panel.GetComponent<UIElement>().TurnOff(1f);
             }
 
-            target.SetActive(true);
-
-            if(target.GetComponent<UIElement>())
+            if (target.GetComponent<UIElement>())
+            {
+                target.GetComponent<UIElement>().TurnOn(1f);
                 target.GetComponent<UIElement>().ReloadPanel();
+            }
 
             VersionUI currentVersion = Managers.Save.currentSave._version;
             switch (currentVersion)
             {
                 case VersionUI.Momentum:
-                    Managers.Save.currentSave._drive = DriveUI.T3Manual;
-                break;
+                    Managers.Save.SetDrive(DriveUI.T3Manual);
+                    Managers.Save.SetColor(ColorUI.IceWhite);
+                    Managers.Save.SetUpholsting(UpholstingUI.Black);
+                    break;
 
                 case VersionUI.Inscription:
+                    Managers.Save.SetDrive(DriveUI.T3Automatic);
+                    Managers.Save.SetColor(ColorUI.IceWhite);
+                    Managers.Save.SetUpholsting(UpholstingUI.Black);
+                    break;
+
                 case VersionUI.RDesign:
-                    Managers.Save.currentSave._drive = DriveUI.T3Automatic;
-                break;
+                    Managers.Save.SetDrive(DriveUI.T3Automatic);
+                    Managers.Save.SetColor(ColorUI.ItsGreen);
+                    Managers.Save.SetUpholsting(UpholstingUI.White);
+                    break;
             }
-            Managers.Save.currentSave._color = ColorUI.BlackStone;
-            Managers.Save.currentSave._upholsting = UpholstingUI.Black;
             Managers.Save.ClearPacket(false);
         }
     }
@@ -50,22 +62,32 @@ public class ConfigurationMenuToggle : MonoBehaviour
         int savesCount = Managers.Save.saves.Count;
         if (savesCount > 0)
         {
-            if(savesCount <= panels.Length && (int)Managers.Save.currentSave._version < panels.Length)
+            if((int)Managers.Save.currentSave._version < panels.Length)
             {
                 Save currentSave = Managers.Save.currentSave;
                 foreach (GameObject panel in panels)
                 {
-                    panel.SetActive(false);
+                    if (panel.GetComponent<UIElement>())
+                        panel.GetComponent<UIElement>().TurnOff(1f);
                 }
-                GameObject chosenPanel = panels[(int)currentSave._version];
-                chosenPanel.SetActive(true);
 
-                if (chosenPanel.GetComponent<ConfigurationMenuPanel>())
-                    chosenPanel.GetComponent<ConfigurationMenuPanel>().LoadSave();
+                GameObject chosenPanel = panels[(int)currentSave._version];
+                if (chosenPanel.GetComponent<UIElement>())
+                {
+                    chosenPanel.GetComponent<UIElement>().TurnOn(1f);
+                }
+
+                ConfigurationMenuPanel panelConfig = chosenPanel.GetComponent<ConfigurationMenuPanel>();
+                if (panelConfig)
+                {
+                    panelConfig.RestartScroll();
+                    panelConfig.LoadSave();
+                }
+                    
             }
             else
             {
-                Debug.LogWarning("Saves out of range!");
+                Debug.LogWarning("Saves out of range! " + savesCount + " " + panels.Length);
             }
         }
         else

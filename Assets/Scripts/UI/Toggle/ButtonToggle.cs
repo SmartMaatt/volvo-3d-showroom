@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class ButtonToggle : UIToggle
 {
+    /*Params*/
     [SerializeField] Image sourceImage;
     public bool startValue;
 
@@ -13,24 +14,43 @@ public class ButtonToggle : UIToggle
     public string dissabled;
 
     private bool state;
+    private bool colorsLoaded;
     private Color dissabledColor;
     private Color enabledColor;
 
+
+    /*Private methods*/
     void Awake()
     {
         if (Managers.allLoaded)
         {
-            dissabledColor = Managers.Color.GetColor(dissabled);
-            enabledColor = Managers.Color.GetColor(enabled);
-            state = startValue;
-
-            if (startValue)
-                sourceImage.color = enabledColor;
-            else
-                sourceImage.color = dissabledColor;
+            Config();
         }   
     }
-    
+
+    IEnumerator Start()
+    {
+        yield return new WaitForSeconds(1);
+        if(!colorsLoaded && Managers.allLoaded)
+        {
+            Config();
+        }
+    }
+
+    private void Config()
+    {
+        dissabledColor = Managers.Color.GetColor(dissabled);
+        enabledColor = Managers.Color.GetColor(enabled);
+        state = startValue;
+        colorsLoaded = true;
+
+        if (startValue)
+            sourceImage.color = enabledColor;
+        else
+            sourceImage.color = dissabledColor;
+    }
+
+    /*Public methods*/
     public override void ToggleButtonHighlight()
     {
         state = !state;
@@ -50,5 +70,10 @@ public class ButtonToggle : UIToggle
     {
         state = false;
         sourceImage.color = dissabledColor;
+    }
+
+    public bool GetButtonState()
+    {
+        return this.state;
     }
 }

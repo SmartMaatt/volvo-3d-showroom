@@ -2,51 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum VersionUI
-{
-    Momentum,
-    Inscription,
-    RDesign
-}
-
-public enum DriveUI
-{
-    T3Manual,
-    T3Automatic,
-    B4MildHybrid,
-    B4AWDMildHybrid,
-    B5AWDMildHybrid
-}
-
-public enum ColorUI
-{
-    BlackStone,
-    IceWhite,
-    GlacierSilver,
-    DenimBlue,
-    FusionRed,
-    ItsGreen
-}
-
-public enum UpholstingUI
-{
-    Black,
-    White
-}
-
-public enum PacketsUI
-{
-    Winter,
-    Parking,
-    Technology,
-    Lightning
-}
-
 [System.Serializable]
 public class Save
 {
     /*Params*/
     public string _name;
+    public string _date;
     public VersionUI _version;
     public DriveUI _drive;
     public ColorUI _color;
@@ -56,19 +17,21 @@ public class Save
     /*Public Methods*/
     public Save()
     {
-        _name = "noname";
+        _name = "EmptyName";
+        _date = "";
         _version = VersionUI.Momentum;
         _drive = DriveUI.T3Manual;
-        _color = ColorUI.BlackStone;
+        _color = ColorUI.IceWhite;
         _upholsting = UpholstingUI.Black;
 
         for(int i=0; i<_packets.Length; i++)
             _packets[i] = false;
     }
 
-    public Save(string name, VersionUI version, DriveUI drive, ColorUI color, UpholstingUI upholsting, bool[] packets)
+    public Save(string name, string date, VersionUI version, DriveUI drive, ColorUI color, UpholstingUI upholsting, bool[] packets)
     {
         _name = name;
+        _date = date;
         _version = version;
         _drive = drive;
         _color = color;
@@ -95,6 +58,7 @@ public class Save
     public Save(Save other)
     {
         _name = other._name;
+        _date = other._date;
         _version = other._version;
         _drive = other._drive;
         _color = other._color;

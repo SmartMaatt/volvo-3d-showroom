@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CameraFreeController : MonoBehaviour
 {
-    /*PARAMS*/
+    /*Params*/
     [Header("Objects")]
     public GameObject CameraFollowObj;
     public GameObject TargetObj;
@@ -42,7 +42,7 @@ public class CameraFreeController : MonoBehaviour
     private CameraFreeLook _freeLookComponent = null;
 
 
-    /*PRIVATE METHODS*/
+    /*Private methods*/
     void Awake()
     {
         transform.eulerAngles = new Vector3(Xrotation, Yrotation, 0.0f);
@@ -121,7 +121,7 @@ public class CameraFreeController : MonoBehaviour
     }
 
 
-    /*PUBLIC METHODS*/
+    /*Public methods*/
     public void ResetSettings()
     {
         _rotX = Xrotation;

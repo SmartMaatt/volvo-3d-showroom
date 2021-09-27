@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CameraClosedController : MonoBehaviour
 {
-    /*PARAMS*/
+    /*Params*/
     [Header("Objects")]
     public GameObject CameraObj;
 
@@ -20,7 +20,7 @@ public class CameraClosedController : MonoBehaviour
     private CameraClosedLook _closedLookComponent = null;
 
 
-    /*PRIVATE METHODS*/
+    /*Private methods*/
     void Awake()
     {
         _closedLookComponent = CameraObj.GetComponent<CameraClosedLook>();
@@ -54,7 +54,7 @@ public class CameraClosedController : MonoBehaviour
     }
 
 
-    /*PUBLIC METHODS*/
+    /*Public methods*/
     public void ChangeSeat()
     {
         if (activeSeat >= seatArray.Length - 1)

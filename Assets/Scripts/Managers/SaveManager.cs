@@ -1,19 +1,19 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
-using System.Globalization;
 
 public class SaveManager : MonoBehaviour, IGameManager
 {
+    /*Params*/
     public ManagerStatus status { get; private set; }
     public string SavePath;
 
     public List<Save> saves;
     public Save currentSave;
 
+    /*Startup*/
     public void Startup()
     {
         Debug.Log("Starting save and load manager");
@@ -26,21 +26,22 @@ public class SaveManager : MonoBehaviour, IGameManager
         status = ManagerStatus.Started;
     }
 
+    /*Public methods*/
     public void SaveCurrentFile()
     {
         Debug.Log("SaveCurrentFile");
         saves.Add(currentSave);
 
         System.IO.Directory.CreateDirectory(Application.persistentDataPath + SavePath);
-        currentSave._name = System.DateTime.Now.ToString("dd.MM.yyyy - HH.mm.ss");
+        currentSave._date = System.DateTime.Now.ToString("dd.MM.yyyy - HH.mm.ss");
         string saveData = JsonUtility.ToJson(currentSave, true);
 
         BinaryFormatter bf = new BinaryFormatter();
-        FileStream file = File.Create(string.Concat(Application.persistentDataPath, SavePath + "/" + currentSave._name + ".save"));
+        FileStream file = File.Create(string.Concat(Application.persistentDataPath, SavePath + "/" + currentSave._name + " - " + currentSave._date + ".save"));
         bf.Serialize(file, saveData);
         file.Close();
 
-        currentSave = new Save();
+        currentSave = new Save();  
     }
 
     public void LoadSaveFiles()
@@ -62,11 +63,20 @@ public class SaveManager : MonoBehaviour, IGameManager
                 saves.Add(saveLoad);
             }
         }
+        else
+        {
+            Debug.LogWarning("Path " + Application.persistentDataPath + SavePath + " does not exist!");
+        }
     }
 
     public void LoadSaveAsCurrent(int val)
     {
         currentSave = new Save(saves[val]);
+    }
+
+    public void SetName(string name)
+    {
+        currentSave._name = name;
     }
 
     public void SetVersion(VersionUI version)

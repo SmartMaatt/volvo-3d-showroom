@@ -4,14 +4,16 @@ using UnityEngine;
 
 public class ColorManager : MonoBehaviour, IGameManager
 {
+    /*Params*/
     public ManagerStatus status { get; private set; }
 
-    [SerializeField] colorProbe[] colorProbeArray;
+    [SerializeField] ColorProbe[] colorProbeArray;
     [Space]
     [SerializeField] Color emptyColor;
 
     private Hashtable hueColourValues = new Hashtable();
 
+    /*Startup*/
     public void Startup()
     {
         Debug.Log("Starting Color manager");
@@ -19,6 +21,7 @@ public class ColorManager : MonoBehaviour, IGameManager
         status = ManagerStatus.Started;
     }
 
+    /*Private methods*/
     private void AddToHashTable()
     {
         for(int i = 0; i < colorProbeArray.Length; i++)
@@ -27,6 +30,7 @@ public class ColorManager : MonoBehaviour, IGameManager
         }
     }
 
+    /*Public methods*/
     public Color GetColor(string name)
     {
         if (hueColourValues.ContainsKey(name))
@@ -40,8 +44,9 @@ public class ColorManager : MonoBehaviour, IGameManager
         }
     }
 
+    /*Custom classes*/
     [System.Serializable]
-    class colorProbe
+    class ColorProbe
     {
         public string name;
         public Color color;

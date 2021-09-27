@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CameraFreeLook : MonoBehaviour
 {
-    /*PARAMS*/
+    /*Params*/
     [Header("Distance")]
     public float minDistance = 1.5f;
     public float maxDistance = 6f;
@@ -25,7 +25,7 @@ public class CameraFreeLook : MonoBehaviour
     private float _distance;
 
 
-    /*PRIVATE METHODS*/
+    /*Private methods*/
     void Awake()
     {
         _cameraDir = transform.localPosition.normalized;
@@ -73,7 +73,7 @@ public class CameraFreeLook : MonoBehaviour
     }
 
 
-    /*PUBLIC METHODS*/
+    /*Public methods*/
     public void Scrolling(float mouseScroll)
     {
         maxDistance += mouseScroll * scrollIntesivity;

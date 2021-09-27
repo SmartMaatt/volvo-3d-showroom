@@ -5,7 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(Camera))]
 public class CameraClosedLook : MonoBehaviour
 {
-    /*PARAMS*/
+    /*Params*/
     [Header("Sensitivity")]
     public float sensitivityHor = 6.0f;
     public float sensitivityVer = 6.0f;
@@ -33,7 +33,7 @@ public class CameraClosedLook : MonoBehaviour
     private Camera _cameraComponent = null;
 
 
-    /*PRIVATE METHODS*/
+    /*Private methods*/
     void Awake()
     {
         _cameraComponent = GetComponent<Camera>();
@@ -56,7 +56,7 @@ public class CameraClosedLook : MonoBehaviour
     }
 
 
-    /*PUBLIC METHODS*/
+    /*Public methods*/
     public void SetLockMode(bool lockMode)
     {
         _lockMode = lockMode;

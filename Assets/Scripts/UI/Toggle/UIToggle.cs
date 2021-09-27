@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class UIToggle : MonoBehaviour
 {
-    public virtual void ToggleButtonHighlight() { }
-    public virtual void TurnOn() { }
-    public virtual void TurnOff() { }
+    /*Public methods*/
+    public virtual void ToggleButtonHighlight(){}
+    public virtual void TurnOn(){}
+    public virtual void TurnOff(){}
 }
