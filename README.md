@@ -40,19 +40,19 @@ This app not only showcases the Volvo XC40 in a visually stunning 3D environment
    - Add new languages post-build by modifying a .csv file containing all UI text.
 
 ## Screenshots
-![Presentation of application](https://smartmatt.pl/github/volvo3d-showroom/volvo3d-showroom1.png)
+![Presentation of application](https://smartmatt.pl/github/volvo3d-showroom/volvo3d-showroom1.jpg)
 *Main presentation panel and selection of package parameters.*
 
-![Rear view](https://smartmatt.pl/github/volvo3d-showroom/volvo3d-showroom2.png)
+![Rear view](https://smartmatt.pl/github/volvo3d-showroom/volvo3d-showroom2.jpg)
 *Change of package parameters and rear view.*
 
-![Driver's view](https://smartmatt.pl/github/volvo3d-showroom/volvo3d-showroom3.png)
+![Driver's view](https://smartmatt.pl/github/volvo3d-showroom/volvo3d-showroom3.jpg)
 *Driver's view of the car interior.*
 
-![Passenger's view](https://smartmatt.pl/github/volvo3d-showroom/volvo3d-showroom4.png)
+![Passenger's view](https://smartmatt.pl/github/volvo3d-showroom/volvo3d-showroom4.jpg)
 *Passenger's view of the interior of the car.*
 
-![Photo/video player](https://smartmatt.pl/github/volvo3d-showroom/volvo3d-showroom5.png)
+![Photo/video player](https://smartmatt.pl/github/volvo3d-showroom/volvo3d-showroom5.jpg)
 *Built-in photo/video player.*
 
 ## Technical Details
